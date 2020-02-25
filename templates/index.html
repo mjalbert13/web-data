@@ -10,6 +10,7 @@
 <body>
     <div class="container">
         <h1>Data Collection</h1>
+        <div class="messsage">{{text | safe}}</div>
         <div class="form">
             <form action="{{url_for('success')}}" method="POST" class="form">
                 <div class="form-group">

@@ -34,3 +34,8 @@ input{
     height: 30px;
     background-color: tomato;
 }
+
+.message{
+    font-size: 20px;
+    color: tomato;
+}

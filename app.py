@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from send import send_email
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"]="postgresql://postgres:603Concord@localhost/height"
@@ -25,8 +26,14 @@ def success():
     if request.method == "POST":
         email = request.form["email-name"]
         height = request.form["height"]
-        print("email: "+email +"\n"+"Height: "+height)
-        return render_template("success.html")
+        send_email(email, height)
+        if db.session.query(Data).filter(Data.email == email).count() == 0:
+            data = Data(email, height)
+            db.session.add(data)
+            db.session.commit()
+            return render_template("success.html")
+        else:
+            return render_template("index.html", text="Sorry Email allready Exisits")
 
 if __name__ == "__main__":
     app.debug = True
